@@ -1,0 +1,63 @@
+buildscript {
+    ext { //ext는 build.gradle에서 사용하는 전역변수를 설정하겠다는 의미
+        springBootVersion = '2.1.7.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+//앞서 선언한 플러그인 의존성들을 적용할 것인지를 결정하는 코드
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+//io.spring.dependency-management는 스프링 부트의 의존성들을 관리해주는 플러그인(필수 플러그인)
+
+group 'com.spring'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.11
+
+repositories {//원격 저장소 선택(인터넷 연결해서 받아오는 원격저장소)
+    mavenCentral()
+}
+
+/* 의존성 등록 */
+dependencies {
+    /*
+      Gradle 버전 업그레이드 참고사항
+      1. 기존 compile(), testCompile() 메서드는 deprecated
+      2. 대신 implementation , testImplementation 사용
+    */
+
+    /* SpringBoot 사용(JAVA > SpringBoot) */
+    implementation('org.springframework.boot:spring-boot-starter-web')
+
+    /* SpringBoot 테스트 사용 */
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+
+
+
+    /* --------- [JPA 의존성 추가할 때 H2도 같이 추가 필요] --------- */
+    /* JPA 사용(스프링 부트용 Spring Data JPA 라이브러리) */
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+
+    /* 인메모리 관계형 데이터 베이스(h2 라이브러리) */
+    runtimeOnly 'com.h2database:h2'
+    //implementation('org.h2database:h2') deprecated 되어서 runtimeonly 사용
+
+
+
+
+    /* 롬복(lombok) 사용 */
+    implementation('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok') //gradle 버전이 올라가면서 lombok 사용시 추가
+
+
+
+    /* 의존성 등록할때 특정버전을 입력하지 않으면 자동으로 현재 스프링 부트에 맞는 버전으로 다운 */
+}

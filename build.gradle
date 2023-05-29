@@ -41,7 +41,6 @@ dependencies {
 
 
 
-
     /* --------- [JPA 의존성 추가할 때 H2도 같이 추가 필요] --------- */
     /* JPA 사용(스프링 부트용 Spring Data JPA 라이브러리) */
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -51,13 +50,16 @@ dependencies {
     //implementation('org.h2database:h2') deprecated 되어서 runtimeonly 사용
 
 
-
-
     /* 롬복(lombok) 사용 */
     implementation('org.projectlombok:lombok')
-    annotationProcessor('org.projectlombok:lombok') //gradle 버전이 올라가면서 lombok 사용시 추가
+
+    //gradle 버전이 올라가면서 lombok 사용시 추가 필요(annotationProcessor)
+    annotationProcessor('org.projectlombok:lombok')
 
 
+
+    /* 머스타치(mustache) 사용 */
+    implementation('org.springframework.boot:spring-boot-starter-mustache')
 
     /* 의존성 등록할때 특정버전을 입력하지 않으면 자동으로 현재 스프링 부트에 맞는 버전으로 다운 */
 }
